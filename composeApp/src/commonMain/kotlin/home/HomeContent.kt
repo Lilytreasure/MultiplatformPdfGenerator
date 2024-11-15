@@ -41,11 +41,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import decomposeapp.composeapp.generated.resources.CoffeeCup
-import decomposeapp.composeapp.generated.resources.Res
-import decomposeapp.composeapp.generated.resources.imagee
-import decomposeapp.composeapp.generated.resources.img
-import decomposeapp.composeapp.generated.resources.poppins_blackItalic
+import multiplatformdocs.composeapp.generated.resources.CoffeeCup
+import multiplatformdocs.composeapp.generated.resources.Res
+import multiplatformdocs.composeapp.generated.resources.imagee
+import multiplatformdocs.composeapp.generated.resources.img
+import multiplatformdocs.composeapp.generated.resources.poppins_blackItalic
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource

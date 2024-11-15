@@ -24,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import decomposeapp.composeapp.generated.resources.CoffeeCup
-import decomposeapp.composeapp.generated.resources.Res
-import decomposeapp.composeapp.generated.resources.framea
-import decomposeapp.composeapp.generated.resources.frameb
+import multiplatformdocs.composeapp.generated.resources.CoffeeCup
+import multiplatformdocs.composeapp.generated.resources.Res
+import multiplatformdocs.composeapp.generated.resources.framea
+import multiplatformdocs.composeapp.generated.resources.frameb
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

@@ -1,4 +1,4 @@
-rootProject.name = "DecomposeApp"
+rootProject.name = "MultiplatformDocs"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
