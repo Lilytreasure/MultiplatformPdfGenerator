@@ -1,5 +1,6 @@
 package notifications
 
+import PdfPreviewScreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,92 +62,102 @@ fun NotificationContent(component: NotificationComponent, modifier: Modifier = M
             showCamera=false
         })
 
-    Scaffold(topBar = {
-        TopAppBar(title = { Text(text = "Notify", fontSize = 15.sp) })
-    }) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
-                .fillMaxSize()
-        ) {
-            Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
-                if (mutableBitmapState.value != null) {
-                    mutableBitmapState.value?.let { image ->
-                        Image(
-                            bitmap = image,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(1.dp),
-                            alignment = Alignment.CenterEnd
-                        )
-                    }
+    PdfPreviewScreen(
+        content = "This is a sample PDF content.\nLine 2\nLine 3",
+        onSave = { content ->
+            val filePath = PdfUtil.createAndSavePdf(content, "sample_preview_pdf")
+            println("PDF saved at: $filePath")
+        }
+    )
 
-                }
 
-//                ElevatedButton(modifier = Modifier
-//                    .fillMaxWidth(), onClick = {
-//                    component.platformSpecific.launchDialer("2547897567")
-//
-//                }) {
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        verticalAlignment = Alignment.CenterVertically
-//                    ) {
-//                        Icon(
-//                            Icons.Default.Call,
-//                            contentDescription = "Call Icon",
-//                            tint = Color.Green,
-//                            modifier = Modifier.padding(1.dp)
+
+//    Scaffold(topBar = {
+//        TopAppBar(title = { Text(text = "Notify", fontSize = 15.sp) })
+//    }) { paddingValues ->
+//        Column(
+//            modifier = Modifier.padding(paddingValues)
+//                .fillMaxSize()
+//        ) {
+//            Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+//                if (mutableBitmapState.value != null) {
+//                    mutableBitmapState.value?.let { image ->
+//                        Image(
+//                            bitmap = image,
+//                            contentDescription = null,
+//                            modifier = Modifier
+//                                .size(50.dp)
+//                                .padding(1.dp),
+//                            alignment = Alignment.CenterEnd
 //                        )
-//                        Text(text = "Call")
+//                    }
+//
+//                }
+//
+////                ElevatedButton(modifier = Modifier
+////                    .fillMaxWidth(), onClick = {
+////                    component.platformSpecific.launchDialer("2547897567")
+////
+////                }) {
+////                    Row(
+////                        modifier = Modifier.fillMaxWidth(),
+////                        verticalAlignment = Alignment.CenterVertically
+////                    ) {
+////                        Icon(
+////                            Icons.Default.Call,
+////                            contentDescription = "Call Icon",
+////                            tint = Color.Green,
+////                            modifier = Modifier.padding(1.dp)
+////                        )
+////                        Text(text = "Call")
+////                    }
+////                }
+//                //FilesUpload
+//                //component.platformSpecific.CameraView()
+//                when {
+//                    showCamera -> {
+//                        Box(modifier = Modifier.absoluteOffset(x = 16.dp)) {
+//                            PeekabooCamera(
+//                                state = state,
+//                                modifier = Modifier.fillMaxSize(0.7f),
+//                                permissionDeniedContent = {
+//                                    PermissionDenied(
+//                                        modifier = Modifier.fillMaxSize(),
+//                                    )
+//                                },
+//                            )
+//                            CameraOverlay(
+//                                isCapturing = state.isCapturing,
+//                                onBack = {
+//                                    showCamera = false
+//
+//                                },
+//                                onCapture = {
+//                                    state.capture()
+//                                  //  showCamera = false
+//                                },
+//                                onConvert = { state.toggleCamera() },
+//                                modifier = Modifier.fillMaxSize(),
+//                            )
+//                        }
+//
+//
+//                    }
+//
+//                    else -> {
+//                        Button(onClick = {
+//                            showCamera=true
+//
+//                        }) {
+//                            Text(text = "Show Camera ")
+//                        }
+//
 //                    }
 //                }
-                //FilesUpload
-                //component.platformSpecific.CameraView()
-                when {
-                    showCamera -> {
-                        Box(modifier = Modifier.absoluteOffset(x = 16.dp)) {
-                            PeekabooCamera(
-                                state = state,
-                                modifier = Modifier.fillMaxSize(0.7f),
-                                permissionDeniedContent = {
-                                    PermissionDenied(
-                                        modifier = Modifier.fillMaxSize(),
-                                    )
-                                },
-                            )
-                            CameraOverlay(
-                                isCapturing = state.isCapturing,
-                                onBack = {
-                                    showCamera = false
-
-                                },
-                                onCapture = {
-                                    state.capture()
-                                  //  showCamera = false
-                                },
-                                onConvert = { state.toggleCamera() },
-                                modifier = Modifier.fillMaxSize(),
-                            )
-                        }
-
-
-                    }
-
-                    else -> {
-                        Button(onClick = {
-                            showCamera=true
-
-                        }) {
-                            Text(text = "Show Camera ")
-                        }
-
-                    }
-                }
-
-            }
-        }
-    }
+//
+//            }
+//        }
+//    }
 }
 
 
