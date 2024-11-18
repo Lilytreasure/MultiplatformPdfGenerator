@@ -1,9 +1,12 @@
+import PdfUtil.createAndSavePdf
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
+import android.os.Environment
 import android.view.View
 import android.widget.Toast
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 class PdfPreviewView(context: Context, private val content: String) : View(context) {
     private val paint = Paint().apply {
@@ -79,74 +83,86 @@ class PdfPreviewView(context: Context, private val content: String) : View(conte
 @Composable
 actual fun PdfPreview(content: String) {
     val context = LocalContext.current
-    var text by remember { mutableStateOf(TextFieldValue(content)) }
-    var firstName by remember { mutableStateOf(TextFieldValue("")) }
-    var lastName by remember { mutableStateOf(TextFieldValue("")) }
+    // States for user input
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var fileName by remember { mutableStateOf("") }
+
+    // Combine content for preview
+    val combinedContent = remember(firstName, lastName, email) {
+        buildString {
+            append("First Name: $firstName\n")
+            append("Last Name: $lastName\n")
+            append("Email: $email\n")
+        }
+    }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // TextField for User Input (Main Content)
-        TextField(
-            value = text,
-            onValueChange = { text = it },
-            label = { Text("Enter Text for PDF") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-        )
-
-        // TextField for First Name
+        // TextFields for user input
         TextField(
             value = firstName,
             onValueChange = { firstName = it },
             label = { Text("First Name") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // TextField for Last Name
         TextField(
             value = lastName,
             onValueChange = { lastName = it },
             label = { Text("Last Name") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // Combine all the content including first name, last name, and main text
-        val combinedContent = buildString {
-            append("First Name: ${firstName.text}\n")
-            append("Last Name: ${lastName.text}\n")
-            append("\n")
-            append(text.text)
-        }
-
-        // Preview the content in the PdfPreviewView
-        AndroidView(
-            modifier = Modifier.weight(1f),
-            factory = { context -> PdfPreviewView(context, combinedContent) }
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // Save Button
+        TextField(
+            value = fileName,
+            onValueChange = { fileName = it },
+            label = { Text("File Name (without .pdf)") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+//        AndroidView(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(300.dp)
+//                .border(1.dp, MaterialTheme.colorScheme.onBackground),
+//            factory = { context -> PdfPreviewView(context, combinedContent) }
+//        )
+
+        // Save PDF Button
         Button(
             onClick = {
-                val outputDir = context.cacheDir
-                val pdfFile = File(outputDir, "preview.pdf")
+                if (fileName.isBlank()) {
+                    Toast.makeText(context, "Please enter a valid file name.", Toast.LENGTH_SHORT).show()
+                    return@Button
+                }
 
-                // Generate the PDF with combined content
-                val pdfPreviewView = PdfPreviewView(context, combinedContent)
-                pdfPreviewView.post {
-                    pdfPreviewView.createPdf(pdfFile)
-
-                    // Optionally, show a toast message or share the PDF
-                    Toast.makeText(context, "PDF saved to ${pdfFile.absolutePath}", Toast.LENGTH_LONG).show()
+                try {
+                    val pdfPath = createAndSavePdf(combinedContent, fileName)
+                    Toast.makeText(context, "PDF saved to $pdfPath", Toast.LENGTH_LONG).show()
+                } catch (e: IOException) {
+                    Toast.makeText(context, "Error saving PDF: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Save PDF")
+            Text("Save PDF d")
         }
     }
 }
+
 
 
 

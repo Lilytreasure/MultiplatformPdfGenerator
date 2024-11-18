@@ -19,7 +19,8 @@ fun PdfPreviewScreen(content: String, onSave: (String) -> Unit) {
             TopAppBar(title = { Text("PDF Preview") })
         },
         content = { padding ->
-            Column(modifier = Modifier.padding(padding)) {
+            Column(modifier = Modifier
+                .padding(padding)) {
                 Box(
                     modifier = Modifier
                         .weight(1f)

@@ -65,7 +65,7 @@ fun NotificationContent(component: NotificationComponent, modifier: Modifier = M
     PdfPreviewScreen(
         content = "This is a sample PDF content.\nLine 2\nLine 3",
         onSave = { content ->
-            val filePath = PdfUtil.createAndSavePdf(content, "sample_preview_pdf")
+            val filePath = PdfUtil.createAndSavePdf(content, "sample_preview")
             println("PDF saved at: $filePath")
         }
     )

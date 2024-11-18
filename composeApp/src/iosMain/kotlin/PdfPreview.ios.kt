@@ -2,12 +2,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
-import androidx.compose.ui.unit.dp
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.readValue
 import platform.CoreGraphics.CGContextDrawLayerInRect
-import platform.CoreGraphics.CGContextFillRect
-import platform.CoreGraphics.CGContextRef
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGRectZero
 import platform.CoreGraphics.CGSizeMake
@@ -15,7 +12,6 @@ import platform.Foundation.NSAttributedString
 import platform.Foundation.NSData
 import platform.Foundation.NSTemporaryDirectory
 import platform.PDFKit.PDFDocument
-import platform.PDFKit.PDFPage
 import platform.PDFKit.PDFView
 import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsBeginImageContext
