@@ -1,4 +1,5 @@
-import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Environment
 import java.io.File
@@ -6,29 +7,55 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 actual object PdfUtil {
-    actual fun createAndSavePdf(content: String, fileName: String): String {
+    actual fun createAndSavePdf(
+        firstname: String,
+        lastname: String,
+        email: String,
+        fileName: String
+    ): String {
         val pdfDocument = PdfDocument()
-        val pageInfo = PdfDocument.PageInfo.Builder(300, 600, 1).create()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
         val page = pdfDocument.startPage(pageInfo)
+        val canvas: Canvas = page.canvas
+        val paint = Paint().apply { isAntiAlias = true }
 
-        val canvas = page.canvas
-        val paint = android.graphics.Paint().apply {
-            textSize = 16f
-            color = android.graphics.Color.BLACK
+        // Define table dimensions
+        val startX = 50f
+        val startY = 50f
+        val columnWidth = 150f
+        val rowHeight = 50f
+        val numRows = 4
+        val numColumns = 3 // Adjusted to match First Name, Last Name, and Email
+
+        // Draw table rows
+        for (row in 0..numRows) {
+            val top = startY + row * rowHeight
+            canvas.drawLine(startX, top, startX + numColumns * columnWidth, top, paint)
+        }
+        // Draw table columns
+        for (col in 0..numColumns) {
+            val left = startX + col * columnWidth
+            canvas.drawLine(left, startY, left, startY + numRows * rowHeight, paint)
+        }
+        // Add header row
+        paint.textSize = 16f
+        paint.textAlign = Paint.Align.CENTER
+        val headers = listOf("First Name", "Last Name", "Email")
+        headers.forEachIndexed { index, header ->
+            val textX = startX + index * columnWidth + columnWidth / 2
+            val textY = startY + rowHeight / 2 - (paint.descent() + paint.ascent()) / 2
+            canvas.drawText(header, textX, textY, paint)
         }
 
-        // Split the content by lines and render it in a column format
-        val lines = content.split("\n")
-        val lineHeight = paint.textSize + 8f // Adjust line spacing
-        var yPosition = 50f // Start position
-
-        lines.forEach { line ->
-            canvas.drawText(line, 10f, yPosition, paint)
-            yPosition += lineHeight
+        // Add user data row
+        val userData = listOf(firstname, lastname, email)
+        userData.forEachIndexed { index, data ->
+            val textX = startX + index * columnWidth + columnWidth / 2
+            val textY = startY + rowHeight + rowHeight / 2 - (paint.descent() + paint.ascent()) / 2
+            canvas.drawText(data, textX, textY, paint)
         }
-
         pdfDocument.finishPage(page)
-
+        // Set the directory to save the PDF file
         val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
         // Ensure the directory exists
@@ -44,7 +71,6 @@ actual object PdfUtil {
         } else {
             file
         }
-
         try {
             FileOutputStream(finalFile).use { output ->
                 pdfDocument.writeTo(output)

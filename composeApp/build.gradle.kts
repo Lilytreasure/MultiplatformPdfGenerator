@@ -82,6 +82,9 @@ kotlin {
             implementation("androidx.camera:camera-view:1.3.1")
             implementation("com.google.accompanist:accompanist-permissions:0.29.2-rc")
 
+            //itext
+            implementation("com.itextpdf:itext7-core:7.1.15")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)

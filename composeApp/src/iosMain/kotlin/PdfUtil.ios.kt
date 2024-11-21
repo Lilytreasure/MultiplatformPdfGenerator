@@ -10,10 +10,11 @@ import platform.UIKit.UIGraphicsBeginPDFContextToFile
 import platform.UIKit.UIGraphicsBeginPDFPage
 import platform.UIKit.UIGraphicsEndPDFContext
 import platform.UIKit.UIGraphicsGetCurrentContext
+import platform.UIKit.drawAtPoint
 
 actual object PdfUtil {
     @OptIn(ExperimentalForeignApi::class)
-    actual fun createAndSavePdf(content: String, fileName: String): String {
+    actual fun createAndSavePdf(firstname: String, lastname: String, email: String, fileName: String): String {
         val documentsPath = NSSearchPathForDirectoriesInDomains(
             NSDocumentDirectory,
             NSUserDomainMask,
@@ -26,7 +27,9 @@ actual object PdfUtil {
         val context = UIGraphicsGetCurrentContext()
 
         UIGraphicsBeginPDFPage()
-        content.drawAtPoint(CGPointMake(10.0, 10.0), context)
+        // Draw text content (firstname, lastname, email)
+        val text = "First Name: $firstname\nLast Name: $lastname\nEmail: $email"
+        text.drawAtPoint(CGPointMake(10.0, 10.0), context)
 
         UIGraphicsEndPDFContext()
         return filePath // Return the path of the saved PDF
