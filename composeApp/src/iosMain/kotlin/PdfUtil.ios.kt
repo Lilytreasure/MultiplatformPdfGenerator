@@ -36,5 +36,5 @@ actual object PdfUtil {
 @OptIn(ExperimentalForeignApi::class)
 private fun String.drawAtPoint(point: CValue<CGPoint>, context: CGContextRef?) {
     this as NSString
-    this.drawAtPoint(point,  null)
+    this.drawAtPoint(point,  context)
 }

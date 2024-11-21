@@ -14,6 +14,7 @@ import platform.Foundation.NSTemporaryDirectory
 import platform.PDFKit.PDFDocument
 import platform.PDFKit.PDFView
 import platform.UIKit.UIColor
+import platform.UIKit.UIFont
 import platform.UIKit.UIGraphicsBeginImageContext
 import platform.UIKit.UIGraphicsBeginPDFContextToFile
 import platform.UIKit.UIGraphicsBeginPDFPage
@@ -25,7 +26,7 @@ import platform.UIKit.UIImage
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-actual fun PdfPreview(content: String) {
+actual fun savePdfDoc(): Launcher {
     UIKitView(
         modifier = Modifier.fillMaxSize(),
         factory = {
@@ -36,7 +37,7 @@ actual fun PdfPreview(content: String) {
             val pdfDocument = PDFDocument()
 
             // Generate a UIImage from the text content
-            val image = createImageFromText(content)
+            val image = createImageFromText(firstname)
 
             // Create a PDFPage with the generated UIImage
             if (image != null) {
@@ -67,8 +68,6 @@ private fun createImageFromText(content: String): UIImage? {
     val canvasSize = CGSizeMake(300.0, 600.0) // Define the canvas size
     UIGraphicsBeginImageContext(canvasSize)
     val context = UIGraphicsGetCurrentContext() ?: return null
-
-
     // Draw a white background
     UIColor.whiteColor().setFill()
     context.fillRect(CGRectMake(0.0, 0.0, 200.0, 100.0))
@@ -76,10 +75,9 @@ private fun createImageFromText(content: String): UIImage? {
     // Draw the text content
     UIColor.blackColor().set()
     val textRect = CGRectMake(20.0, 20.0, canvasSize.size - 40.0, canvasSize.size - 40.0)
-    CGContextDrawLayerInRect(textRect, withAttributes = mapOf(
+    CGContextDrawLayerInRect(textRect  withattributes = mapOf(
         NSAttributedString.Key.font to UIFont.systemFontOfSize(16.0)
     ))
-
     // Retrieve the generated UIImage
     val image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
