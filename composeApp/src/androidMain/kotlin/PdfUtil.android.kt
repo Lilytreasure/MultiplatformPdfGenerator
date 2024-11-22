@@ -18,7 +18,6 @@ actual object PdfUtil {
         val page = pdfDocument.startPage(pageInfo)
         val canvas: Canvas = page.canvas
         val paint = Paint().apply { isAntiAlias = true }
-
         // Define table dimensions
         val startX = 50f
         val startY = 50f
@@ -84,5 +83,4 @@ actual object PdfUtil {
 
         return finalFile.absolutePath // Return the path of the saved PDF
     }
-
 }
