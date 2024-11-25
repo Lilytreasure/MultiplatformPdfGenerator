@@ -1,7 +1,7 @@
 actual class Launcher actual constructor(
-    private val onLaunch: () -> Unit,
+    private val onLaunch: (pdfDocData: PdfDocData) -> Unit,
 ) {
-    actual fun launch() {
-        onLaunch()
+    actual fun launch(pdfDocData: PdfDocData) {
+        onLaunch(pdfDocData)
     }
 }

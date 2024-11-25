@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04D89C122CF0785200FF0908 /* PdfHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D89C112CF0785200FF0908 /* PdfHandler.swift */; };
 		04FBD3272BDAA0B600DB118C /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FBD3262BDAA0B600DB118C /* camera.png */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04D89C112CF0785200FF0908 /* PdfHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfHandler.swift; sourceTree = "<group>"; };
 		04FBD3262BDAA0B600DB118C /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = ../../../Refactor/camera.png; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -36,6 +38,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04D89C102CF0782800FF0908 /* pdf */ = {
+			isa = PBXGroup;
+			children = (
+				04D89C112CF0785200FF0908 /* PdfHandler.swift */,
+			);
+			path = pdf;
+			sourceTree = "<group>";
+		};
 		04FBD3252BDA95A800DB118C /* img */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +89,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				04D89C102CF0782800FF0908 /* pdf */,
 				04FBD3252BDA95A800DB118C /* img */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				04FBD3262BDAA0B600DB118C /* camera.png */,
@@ -196,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				04D89C122CF0785200FF0908 /* PdfHandler.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
