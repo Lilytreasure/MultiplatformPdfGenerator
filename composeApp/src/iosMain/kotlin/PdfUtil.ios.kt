@@ -1,7 +1,6 @@
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.example.project.PdfController
-
-
+import platform.Foundation.setValue
 
 
 //Todo ---Render the pd doc using c Interop
@@ -14,10 +13,7 @@ actual object PdfUtil {
         fileName: String
     ): String {
         val pdf=PdfController()
-
-
-
-
+        pdf.openPdfWithFilePathLoc("")
 
         return ""
     }
