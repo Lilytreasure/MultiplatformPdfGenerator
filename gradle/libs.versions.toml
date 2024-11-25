@@ -36,7 +36,7 @@ gms = "4.4.0"
 analytics = "21.3.0"
 crashlytics = "18.3.2"
 parcelizeDarwin = "0.2.4"
-swiftklib="0.5.1"
+swiftklib="0.2.0"
 cklib-version = "0.3.3"
 
 

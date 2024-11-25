@@ -1,4 +1,5 @@
 import kotlinx.cinterop.ExperimentalForeignApi
+import org.example.project.PdfController
 
 
 
@@ -12,10 +13,14 @@ actual object PdfUtil {
         email: String,
         fileName: String
     ): String {
-        val pdf=KCrypto()
+        val pdf=PdfController()
+
+
+
 
 
         return ""
     }
 }
+
 

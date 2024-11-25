@@ -10,11 +10,18 @@ plugins {
    // alias(libs.plugins.cklib)
 }
 
+//swiftklib {
+//    create("KCrypto") {
+//        path = file("native/KCrypto")
+//        packageName("org.example.project")
+//        minIos=14
+//    }
+//}
 swiftklib {
-    create("KCrypto") {
-        path = file("native/KCrypto")
+    create("RadioPlayer") {
+        path = file("native/RadioPlayer")
         packageName("org.example.project")
-        minIos=14
+        minIos = 14
     }
 }
 
@@ -48,10 +55,17 @@ kotlin {
             //coil
             //export("io.coil-kt.coil3:coil:3.0.0-alpha01")
         }
-        iosTarget.compilations{
+//        iosTarget.compilations{
+//            val main by getting {
+//                cinterops{
+//                    create("KCrypto")
+//                }
+//            }
+//        }
+        iosTarget.compilations {
             val main by getting {
-                cinterops{
-                    create("KCrypto")
+                cinterops {
+                    create("RadioPlayer")
                 }
             }
         }
