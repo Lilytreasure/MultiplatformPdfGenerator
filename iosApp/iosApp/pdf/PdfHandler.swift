@@ -20,42 +20,67 @@ import SwiftUI
         let margin: CGFloat = 50
         let contentWidth = pageWidth - 2 * margin
         let contentHeight = pageHeight - 2 * margin
-        
+
         let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight))
-        
-        var currentY: CGFloat = margin
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14),
-            .paragraphStyle: NSMutableParagraphStyle()
-        ]
-        
+        let rowHeight: CGFloat = 30
+        let columnWidths: [CGFloat] = [contentWidth * 0.3, contentWidth * 0.3, contentWidth * 0.4]
+
         let data = pdfRenderer.pdfData { context in
             context.beginPage()
-            
+            var currentY: CGFloat = margin
+
+            // Define attributes for text
+            let textAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 14),
+                .paragraphStyle: NSMutableParagraphStyle()
+            ]
+
+            // Draw the header row
+            let headers = ["First Name", "Last Name", "Email"]
+            var currentX: CGFloat = margin
+            for (index, header) in headers.enumerated() {
+                let columnWidth = columnWidths[index]
+                let headerText = NSAttributedString(string: header, attributes: textAttributes)
+                headerText.draw(in: CGRect(x: currentX, y: currentY, width: columnWidth, height: rowHeight))
+                currentX += columnWidth
+            }
+            currentY += rowHeight
+
+            // Draw data rows
             for person in people {
                 guard let firstname = person["firstname"],
                       let lastname = person["lastname"],
                       let email = person["email"] else { continue }
-                
-                let personContent = """
-                First Name: \(firstname)
-                Last Name: \(lastname)
-                Email: \(email)
-                """
-                
-                let attributedString = NSAttributedString(string: personContent, attributes: textAttributes)
-                let textHeight = attributedString.boundingRect(with: CGSize(width: contentWidth, height: .greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil).height + 30
-                
-                if currentY + textHeight > contentHeight + margin {
+
+                let rowValues = [firstname, lastname, email]
+                currentX = margin
+
+                for (index, value) in rowValues.enumerated() {
+                    let columnWidth = columnWidths[index]
+                    let valueText = NSAttributedString(string: value, attributes: textAttributes)
+                    valueText.draw(in: CGRect(x: currentX, y: currentY, width: columnWidth, height: rowHeight))
+                    currentX += columnWidth
+                }
+                currentY += rowHeight
+
+                // Add a new page if the content exceeds the available height
+                if currentY + rowHeight > contentHeight + margin {
                     context.beginPage()
                     currentY = margin
+
+                    // Redraw the header row on the new page
+                    currentX = margin
+                    for (index, header) in headers.enumerated() {
+                        let columnWidth = columnWidths[index]
+                        let headerText = NSAttributedString(string: header, attributes: textAttributes)
+                        headerText.draw(in: CGRect(x: currentX, y: currentY, width: columnWidth, height: rowHeight))
+                        currentX += columnWidth
+                    }
+                    currentY += rowHeight
                 }
-                
-                attributedString.draw(in: CGRect(x: margin, y: currentY, width: contentWidth, height: textHeight))
-                currentY += textHeight
             }
         }
-        
+
         return data
     }
     
