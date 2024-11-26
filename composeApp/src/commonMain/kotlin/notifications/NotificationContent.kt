@@ -2,6 +2,7 @@ package notifications
 
 import PdfDocData
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,7 +71,8 @@ fun NotificationContent(component: NotificationComponent, modifier: Modifier = M
                             label = { Text("File Name (without .pdf)") },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 10.dp)
+                                .padding(bottom = 10.dp),
+                            maxLines = 1
                         )
 
                     }
@@ -88,6 +90,9 @@ fun NotificationContent(component: NotificationComponent, modifier: Modifier = M
                         ) {
                             Text("Save Doc")
                         }
+                    }
+                    item {
+                        Spacer(modifier = Modifier.padding(bottom = 200.dp))
                     }
                 }
             }

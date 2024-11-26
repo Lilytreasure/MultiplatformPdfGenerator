@@ -1,6 +1,5 @@
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.example.project.PdfController
-import platform.Foundation.setValue
 
 
 //Todo ---Render the pd doc using c Interop
@@ -12,10 +11,22 @@ actual object PdfUtil {
         email: String,
         fileName: String
     ): String {
-        val pdf=PdfController()
-        pdf.openPdfWithFilePathLoc("")
-
-        return ""
+        val pdfHelper = PdfController() // Ensure PdfController is correctly implemented and accessible
+        // Create a list of people
+        val people = listOf(
+            mapOf("firstname" to firstname, "lastname" to lastname, "email" to email)
+        )
+        // Generate the PDF
+        val pdfData = pdfHelper.generatePDFFrom(people) // Ensure this matches the function in your Swift code
+        if (pdfData != null) {
+            // Save the PDF
+            val savedURL = pdfHelper.savePDFWithData(pdfData, fileName) // Ensure this matches your Swift method
+            println("PDF saved at: $savedURL")
+            return savedURL?.absoluteString ?: "Error: File URL is null"
+        } else {
+            println("Failed to generate PDF.")
+            return "Error: Failed to generate PDF."
+        }
     }
 }
 
