@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import savePdfDoc
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +32,8 @@ fun NotificationContent(component: NotificationComponent, modifier: Modifier = M
     val saveDocuments=savePdfDoc()
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("PDF Preview") })
+            TopAppBar(title = { Text("PDF Preview",
+                fontSize = 12.sp) })
         },
         content = { padding ->
             Column(modifier = Modifier

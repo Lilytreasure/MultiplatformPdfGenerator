@@ -37,7 +37,7 @@ analytics = "21.3.0"
 crashlytics = "18.3.2"
 parcelizeDarwin = "0.2.4"
 swiftklib="0.2.0"
-cklib-version = "0.3.3"
+
 
 
 
@@ -133,5 +133,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 swiftKlib = { id = "io.github.ttypic.swiftklib", version.ref = "swiftklib" }
-cklib = { id = "co.touchlab.cklib", version.ref = "cklib-version" }
+
 

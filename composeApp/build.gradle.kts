@@ -7,16 +7,8 @@ plugins {
     id("kotlin-parcelize")
     id("app.cash.sqldelight") version "2.0.0"
     kotlin("plugin.serialization") version "1.9.21"
-   // alias(libs.plugins.cklib)
 }
 
-//swiftklib {
-//    create("KCrypto") {
-//        path = file("native/KCrypto")
-//        packageName("org.example.project")
-//        minIos=14
-//    }
-//}
 swiftklib {
     create("PdfCreator") {
         path = file("native/PdfCreator")
@@ -61,13 +53,7 @@ kotlin {
             //coil
             //export("io.coil-kt.coil3:coil:3.0.0-alpha01")
         }
-//        iosTarget.compilations{
-//            val main by getting {
-//                cinterops{
-//                    create("KCrypto")
-//                }
-//            }
-//        }
+
         iosTarget.compilations {
             val main by getting {
                 cinterops {
