@@ -18,9 +18,15 @@ plugins {
 //    }
 //}
 swiftklib {
-    create("RadioPlayer") {
-        path = file("native/RadioPlayer")
+    create("PdfCreator") {
+        path = file("native/PdfCreator")
         packageName("org.example.project")
+        minIos = 14
+    }
+
+    create("PDFHelper") {
+        path = file("/Users/mac/Downloads/Multipdf/MultiDocs/iosApp/iosApp/pdf")
+        packageName("org.example.project.Decompose")
         minIos = 14
     }
 }
@@ -65,7 +71,9 @@ kotlin {
         iosTarget.compilations {
             val main by getting {
                 cinterops {
-                    create("RadioPlayer")
+                    create("PdfCreator")
+                    create("PDFHelper")
+
                 }
             }
         }

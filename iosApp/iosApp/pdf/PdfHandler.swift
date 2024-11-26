@@ -10,8 +10,11 @@ import PDFKit
 import SwiftUI
 
 
-@objc class PDFHelper: NSObject {
-    @objc func generatePDF(from people: [[String: String]]) -> Data? {
+@objc public class PDFHelper: NSObject {
+    @objc public override init() {
+          super.init()
+      }
+    @objc public func generatePDF(from people: [[String: String]]) -> Data? {
         let pageWidth: CGFloat = 612
         let pageHeight: CGFloat = 792
         let margin: CGFloat = 50
@@ -56,7 +59,7 @@ import SwiftUI
         return data
     }
     
-    @objc func savePDF(data: Data, fileName: String) -> URL? {
+    @objc public func savePDF(data: Data, fileName: String) -> URL? {
         let fileManager = FileManager.default
         guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
