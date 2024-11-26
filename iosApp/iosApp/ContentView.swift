@@ -5,21 +5,15 @@ import ComposeApp
 struct ComposeView: UIViewControllerRepresentable {
     
     private let lifecycle: LifecycleRegistry
-    private let topSafeArea: Float
-    private let bottomSafeArea: Float
-    
-    init(lifecycle: LifecycleRegistry, topSafeArea: Float, bottomSafeArea: Float) {
+
+    init(lifecycle: LifecycleRegistry) {
         self.lifecycle = lifecycle
-        self.topSafeArea = topSafeArea
-        self.bottomSafeArea = bottomSafeArea
     }
     
     
     func makeUIViewController(context: Context) -> UIViewController {
         MainViewControllerKt.MainViewController(
-            lifecycle: lifecycle,
-            topSafeArea: topSafeArea,
-            bottomSafeArea: bottomSafeArea
+            lifecycle: lifecycle
         )
 
     }
@@ -30,19 +24,14 @@ struct ComposeView: UIViewControllerRepresentable {
 
 struct ContentView: View {
     private let lifecycle: LifecycleRegistry
-    private let topSafeArea: Float
-    private let bottomSafeArea: Float
+
     
-    
-    init(lifecycle: LifecycleRegistry, topSafeArea: Float, bottomSafeArea: Float) {
+    init(lifecycle: LifecycleRegistry) {
         self.lifecycle = lifecycle
-        self.topSafeArea = topSafeArea
-        self.bottomSafeArea = bottomSafeArea
+      
     }
     var body: some View {
-        ComposeView( lifecycle: lifecycle,
-                     topSafeArea: topSafeArea,
-                     bottomSafeArea: bottomSafeArea)
+        ComposeView( lifecycle: lifecycle)
         .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }

@@ -1,13 +1,10 @@
-package notifications
+package receipt
 
 import PlatformSpecific
 
 
-interface NotificationComponent {
+interface ReceiptComponent {
     val platformSpecific: PlatformSpecific
     fun onUpdateGreetingText()
     fun onBackClicked()
-
-
-
 }

@@ -1,25 +1,19 @@
 package rootBottomStack
 
+import home.HomeComponent
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import buy.BuyComponent
-import about.AboutComponent
-import notifications.NotificationComponent
-import home.HomeComponent
+import receipt.ReceiptComponent
 
 
 interface RootBottomComponent {
     val childStackBottom: Value<ChildStack<*, ChildBottom>>
-    fun openHome()
     fun openFeeds()
-    fun openMessage()
     fun openNotifications()
 
     sealed class ChildBottom {
-        class WelcomeChild(val component: HomeComponent) : ChildBottom()
-        class FeedsChild(val component: BuyComponent) : ChildBottom()
-        class MessageChild(val component: AboutComponent) : ChildBottom()
-        class NotificationsChild(val component: NotificationComponent) : ChildBottom()
+        class FeedsChild(val component: HomeComponent) : ChildBottom()
+        class NotificationsChild(val component: ReceiptComponent) : ChildBottom()
     }
 
 

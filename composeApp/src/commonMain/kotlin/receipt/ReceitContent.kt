@@ -1,4 +1,4 @@
-package notifications
+package receipt
 
 import PdfDocData
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import savePdfDoc
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationContent(component: NotificationComponent, modifier: Modifier = Modifier) {
+fun NotificationContent(component: ReceiptComponent, modifier: Modifier = Modifier) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

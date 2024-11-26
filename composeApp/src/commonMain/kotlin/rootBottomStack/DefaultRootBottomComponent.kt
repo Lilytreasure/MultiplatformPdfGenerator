@@ -1,9 +1,8 @@
 package rootBottomStack
 
-import about.AboutComponent
-import about.DefaultAboutComponent
-import buy.BuyComponent
-import buy.DefautBuyComponent
+
+import home.HomeComponent
+import home.DefautHomeComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -12,11 +11,9 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.Lifecycle
-import home.DefaultHomeComponent
-import home.HomeComponent
 import kotlinx.serialization.Serializable
-import notifications.DefaultNotificationComponent
-import notifications.NotificationComponent
+import receipt.DefaultReceiptComponent
+import receipt.ReceiptComponent
 
 
 class DefaultRootBottomComponent(
@@ -29,7 +26,7 @@ class DefaultRootBottomComponent(
         childStack(
             source = navigationBottomStackNavigation,
             serializer = ConfigBottom.serializer(),
-            initialConfiguration = ConfigBottom.Welcome,
+            initialConfiguration = ConfigBottom.Feeds,
             handleBackButton = true,
             childFactory = ::createChildBottom,
             key = "authStack"
@@ -45,16 +42,8 @@ class DefaultRootBottomComponent(
     ): RootBottomComponent.ChildBottom =
         when (config) {
 
-            is ConfigBottom.Welcome -> RootBottomComponent.ChildBottom.WelcomeChild(
-                welcomeComponent(componentContext)
-            )
-
             is ConfigBottom.Feeds -> RootBottomComponent.ChildBottom.FeedsChild(
                 feedsComponent(componentContext)
-            )
-
-            is ConfigBottom.Message -> RootBottomComponent.ChildBottom.MessageChild(
-                messageComponent(componentContext)
             )
 
             is ConfigBottom.Notification -> RootBottomComponent.ChildBottom.NotificationsChild(
@@ -62,18 +51,8 @@ class DefaultRootBottomComponent(
             )
         }
 
-
-    private fun welcomeComponent(componentContext: ComponentContext): HomeComponent =
-        DefaultHomeComponent(
-            componentContext = componentContext,
-            onFinished = {
-
-            }
-
-        )
-
-    private fun feedsComponent(componentContext: ComponentContext): BuyComponent =
-        DefautBuyComponent(
+    private fun feedsComponent(componentContext: ComponentContext): HomeComponent =
+        DefautHomeComponent(
             componentContext = componentContext,
             onShowWelcome = {
 
@@ -81,8 +60,8 @@ class DefaultRootBottomComponent(
 
         )
 
-    private fun messageComponent(componentContext: ComponentContext): AboutComponent =
-        DefaultAboutComponent(
+    private fun notificationComponent(componentContext: ComponentContext): ReceiptComponent =
+        DefaultReceiptComponent(
             componentContext = componentContext,
             onShowWelcome = {
 
@@ -90,25 +69,9 @@ class DefaultRootBottomComponent(
 
         )
 
-    private fun notificationComponent(componentContext: ComponentContext): NotificationComponent =
-        DefaultNotificationComponent(
-            componentContext = componentContext,
-            onShowWelcome = {
-
-            }
-
-        )
-
-    override fun openHome() {
-        navigationBottomStackNavigation.bringToFront(ConfigBottom.Welcome)
-    }
 
     override fun openFeeds() {
         navigationBottomStackNavigation.bringToFront(ConfigBottom.Feeds)
-    }
-
-    override fun openMessage() {
-        navigationBottomStackNavigation.bringToFront(ConfigBottom.Message)
     }
 
     override fun openNotifications() {
@@ -117,14 +80,9 @@ class DefaultRootBottomComponent(
 
     @Serializable
     private sealed class ConfigBottom {
-        @Serializable
-        data object Welcome : ConfigBottom()
 
         @Serializable
         data object Feeds : ConfigBottom()
-
-        @Serializable
-        data object Message : ConfigBottom()
 
         @Serializable
         data object Notification : ConfigBottom()
@@ -135,7 +93,7 @@ class DefaultRootBottomComponent(
         lifecycle.subscribe(object : Lifecycle.Callbacks {
             override fun onResume() {
                 when (childStackBottom.active.configuration) {
-                    is ConfigBottom.Message -> {
+                    is ConfigBottom.Notification -> {
                         super.onResume()
                     }
 

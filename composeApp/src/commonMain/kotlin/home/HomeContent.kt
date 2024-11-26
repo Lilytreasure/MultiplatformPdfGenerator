@@ -1,302 +1,107 @@
 package home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import PdfDocData
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Tune
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import multiplatformdocs.composeapp.generated.resources.CoffeeCup
-import multiplatformdocs.composeapp.generated.resources.Res
-import multiplatformdocs.composeapp.generated.resources.imagee
-import multiplatformdocs.composeapp.generated.resources.img
-import multiplatformdocs.composeapp.generated.resources.poppins_blackItalic
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.painterResource
-import theme.buttonColor
+import androidx.compose.ui.unit.sp
+import savePdfDoc
 
-@OptIn(
-    ExperimentalResourceApi::class, ExperimentalFoundationApi::class,
-    ExperimentalMaterial3Api::class
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WelcomeContent(
+fun HomeContent(
     component: HomeComponent,
     modifier: Modifier = Modifier
 ) {
-    val pagerState = rememberPagerState(pageCount = {
-        10
-    })
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var fileName by remember { mutableStateOf("") }
+    val saveDocuments=savePdfDoc()
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = {
-                    Row(modifier = Modifier.background(color = MaterialTheme.colorScheme.primary)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp, top = 10.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
-                            Column() {
-                                Text(
-                                    text = "Location",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                                )
-                                Text(
-                                    text = "Dennis",
-                                    style = MaterialTheme.typography.titleSmall,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    fontFamily = FontFamily(Font(Res.font.poppins_blackItalic))
-                                )
-                            }
-                            //open file picker and set profile  picture
-                            Image(
-                                painter = painterResource(Res.drawable.img),
-                                contentDescription = "profile Picture",
-                                modifier = Modifier
-                                    .width(44.dp)
-                                    .height(44.dp)
-                            )
-                        }
-                    }
-
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
-            )
+            TopAppBar(title = { Text("PDF Preview",
+                fontSize = 12.sp) })
         },
-
-        ) { innePadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding()
-        ) {
-            Column(modifier = Modifier.padding(innePadding)) {
-                Box() {
-                    Column(
-                        modifier = Modifier
-                            .background(color = MaterialTheme.colorScheme.primary)
-                            .fillMaxHeight(0.3f)
-                    ) {
-                        Card(
+        content = { padding ->
+            Column(modifier = Modifier
+                .padding(padding)) {
+                LazyColumn(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+                    item {
+                        TextField(
+                            value = firstName,
+                            onValueChange = { firstName = it },
+                            label = { Text("First Name") },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 28.dp, start = 16.dp, end = 16.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier.padding(
-                                        top = 17.dp,
-                                        bottom = 17.dp,
-                                        start = 16.dp
-                                    )
-                                ) {
-                                    Row() {
-                                        Icon(
-                                            Icons.Outlined.Search,
-                                            contentDescription = "Search"
-                                        )
-                                        Text(
-                                            modifier = Modifier.padding(start = 1.dp),
-                                            text = "Search Coffee",
-                                            style = MaterialTheme.typography.bodySmall
-                                        )
-                                    }
-                                }
-                                Icon(
-                                    Icons.Outlined.Tune,
-                                    contentDescription = "filter",
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .background(
-                                            color = MaterialTheme.colorScheme.tertiary,
-                                            shape = RoundedCornerShape(14.dp)
-                                        ),
-                                    tint = MaterialTheme.colorScheme.onSecondaryContainer
-                                )
-                            }
-                        }
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(0.41f)
-                            .padding(top = 110.dp, start = 16.dp, end = 16.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Card(
+                                .padding(bottom = 10.dp, top = 5.dp)
+                        )
+
+                        TextField(
+                            value = lastName,
+                            onValueChange = { lastName = it },
+                            label = { Text("Last Name") },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(),
-                            shape = RoundedCornerShape(16.dp),
+                                .padding(bottom = 10.dp)
+                        )
+
+                        TextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            label = { Text("Email") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp)
+                        )
+
+                        TextField(
+                            value = fileName,
+                            onValueChange = { fileName = it },
+                            label = { Text("File Name (without .pdf)") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp),
+                            maxLines = 1
+                        )
+
+                    }
+                    item {
+                        Button(
+                            onClick = {
+                                //save DOc
+                                println("current;;" + firstName)
+                                saveDocuments.launch(PdfDocData(firstname = firstName, lastname = lastName,email, fileName))
+
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
                         ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-
-                                Image(
-                                    painter = painterResource(Res.drawable.imagee),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .matchParentSize()
-                                )
-                                Column() {
-                                    Row(
-                                        modifier = Modifier
-                                            .padding(start = 16.dp)
-                                    ) {
-                                        ElevatedButtonExample()
-                                    }
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Start,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            text = "Buy one get one FREE",
-                                            style = MaterialTheme.typography.titleLarge,
-                                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                            modifier = Modifier
-                                                .fillMaxWidth(0.5f)
-                                                .padding(start = 16.dp),
-                                        )
-                                    }
-                                }
-                            }
+                            Text("Save Doc")
                         }
                     }
-                }
-                Column() {
-                    LazyRow(
-                        modifier = Modifier
-                            .padding(top = 20.dp, start = 16.dp, end = 16.dp)
-                    ) {
-                        items(5) {
-                            FilledTonalButton { }
-                            Spacer(modifier = Modifier.padding(start = 5.dp))
-                        }
+                    item {
+                        Spacer(modifier = Modifier.padding(bottom = 200.dp))
                     }
-                    LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(2),
-                        verticalItemSpacing = 10.dp,
-                        horizontalArrangement = Arrangement.spacedBy(24.dp),
-                        content = {
-                            items(10) {
-                                ProductsCard()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 20.dp, start = 16.dp, end = 16.dp)
-                    )
                 }
             }
         }
-    }
+    )
 }
 
-@Composable
-fun FilledTonalButton(onClick: () -> Unit) {
-    FilledTonalButton(onClick = { onClick() }) {
-        Text("Cappuccino",
-            style = MaterialTheme.typography.labelLarge)
-    }
-}
-
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun ProductsCard() {
-    ElevatedCard() {
-        Column() {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Image(
-                    painter = painterResource(Res.drawable.CoffeeCup),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.fillMaxSize()
-                )
-                Column() {
-                    Text(
-                        text = "6.5",
-                        modifier = Modifier.padding(start = 12.dp),
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-            }
-            Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp)) {
-                Text(text = "Cappucino",
-                    style = MaterialTheme.typography.bodyMedium)
-                Text(text = "with Chocolate",
-                     style = MaterialTheme.typography.bodyMedium)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "$ 4.53",
-                        style = MaterialTheme.typography.labelLarge)
-                }
-            }
-        }
-
-    }
-}
-
-@Composable
-fun ElevatedButtonExample() {
-    ElevatedButton(modifier = Modifier
-        .height(35.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
-        onClick = { }) {
-        Text("Promo")
-    }
-}

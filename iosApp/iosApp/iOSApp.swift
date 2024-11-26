@@ -10,9 +10,7 @@ struct iOSApp: App {
         WindowGroup {
             GeometryReader { geo in
                 ContentView(
-                    lifecycle:lifecycle,
-                    topSafeArea: Float(geo.safeAreaInsets.top),
-                    bottomSafeArea: Float(geo.safeAreaInsets.bottom)
+                    lifecycle:lifecycle
                 )
                 .ignoresSafeArea()
                 .onTapGesture {
