@@ -8,49 +8,51 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColors = lightColorScheme(
-    primary = customBackGround,
-    onPrimary = PrimaryTextColor,
-    secondary = SecondaryColor,
-    onSecondary = SecondaryTextColor,
-    tertiary = iconColor,
-    onTertiary = PrimaryTextColor,
-    background = BackgroundLightColor,
-    onBackground = Color.Black,
-    surface = SurfaceLight,
-    onSurface = Color.Black,
-    surfaceVariant = SurfaceLight,
-    onSurfaceVariant = Color.Black,
-    secondaryContainer = PrimaryColor,
-    onSecondaryContainer = Color.White,
-    error = ErrorColor,
-    onError = OnErrorColor,
+private val DarkColorScheme = darkColorScheme(
+    primary = primaryColor,
+    secondary = Green300,
+    tertiary = Blue400,
+
+    background = Black,
+    surface = DarkGray400,
+    surfaceVariant = Gray400,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    secondaryContainer = Green200,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onSurfaceVariant = LightGray400,
+    outline = LightGray400,
+    tertiaryContainer = Green400
 )
 
-private val DarkColors = darkColorScheme(
-    primary = customBackGround,
-    onPrimary = PrimaryTextColor,
-    secondary = SecondaryLightColor,
-    onSecondary = SecondaryTextColor,
-    tertiary = iconColor,
-    onTertiary = PrimaryTextColor,
-    background = BackgroundDarkColor,
-    onBackground = Color.White,
-    surface = SurfaceDark,
-    onSurface = Color.White,
-    surfaceVariant = SurfaceDark,
-    onSurfaceVariant = Color.White,
-    secondaryContainer = PrimaryColor,
-    onSecondaryContainer = Color.White,
-    error = ErrorColor,
-    onError = OnErrorColor,
+private val LightColorScheme = lightColorScheme(
+    primary = primaryColor,
+    secondary = Green300,
+    tertiary = Blue400,
+    background = Color(0xFFF7F7F7),
+    surface = Color(0xFFF7F7F7),
+    surfaceVariant = Gray400,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    secondaryContainer = Green200,
+    onBackground = Black,
+    onSurface = Black,
+    onSurfaceVariant = DarkGray400,
+    outline = LightGray400,
+    inverseOnSurface = Color(0xFFFFFFFF),
+    tertiaryContainer = Green400
 )
 
 @Composable
 internal fun ComposeExperimentalTheme(useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val autoColors = if (useDarkTheme)LightColors else LightColors
+    val colors = if (!useDarkTheme) {
+        LightColorScheme
+    } else {
+        DarkColorScheme
+    }
     MaterialTheme(
-        colorScheme = autoColors,
+        colorScheme = colors,
         shapes = Shapes,
         content = content,
     )
