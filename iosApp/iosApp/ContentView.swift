@@ -32,7 +32,7 @@ struct ContentView: View {
     }
     var body: some View {
         ComposeView( lifecycle: lifecycle)
-        .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+            .ignoresSafeArea(.all, edges: [.top, .bottom]) // Compose has own keyboard handler
     }
 }
 

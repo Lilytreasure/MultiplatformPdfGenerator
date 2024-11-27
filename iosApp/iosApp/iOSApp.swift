@@ -12,7 +12,6 @@ struct iOSApp: App {
                 ContentView(
                     lifecycle:lifecycle
                 )
-                .ignoresSafeArea()
                 .onTapGesture {
                     // Hide keyboard on tap outside of TextField
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

@@ -96,7 +96,7 @@ fun EntriesText(
                 if (desiredEntry.text.isEmpty()
                 ) {
                     Text(
-                        modifier = Modifier.alpha(.3f),
+                        modifier = Modifier.alpha(.7f),
                         text = labelEntry,
                         style = MaterialTheme.typography.bodySmall
                     )
