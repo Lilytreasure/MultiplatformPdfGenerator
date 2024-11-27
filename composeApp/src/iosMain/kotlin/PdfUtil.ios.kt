@@ -9,7 +9,8 @@ actual object PdfUtil {
         firstname: String,
         lastname: String,
         email: String,
-        fileName: String
+        fileName: String,
+        fileSavedStatus: (url: String) -> Unit
     ): String {
 
         val pdf2 = PDFHelper()
@@ -23,6 +24,7 @@ actual object PdfUtil {
             val savedURL =
                 pdf2.savePDFWithData(pdfData, fileName) // Ensure this matches your Swift method
             println("PDF saved at..: $savedURL")
+            fileSavedStatus(savedURL.toString())
             return savedURL?.absoluteString ?: "Error: File URL is null"
         } else {
             println("Failed to generate PDF.")

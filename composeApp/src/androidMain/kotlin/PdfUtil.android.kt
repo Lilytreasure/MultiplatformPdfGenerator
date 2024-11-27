@@ -11,7 +11,8 @@ actual object PdfUtil {
         firstname: String,
         lastname: String,
         email: String,
-        fileName: String
+        fileName: String,
+        fileSavedStatus:(url: String)->Unit
     ): String {
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
@@ -74,6 +75,8 @@ actual object PdfUtil {
             FileOutputStream(finalFile).use { output ->
                 pdfDocument.writeTo(output)
             }
+
+            fileSavedStatus(finalFile.absolutePath)
         } catch (e: Exception) {
             e.printStackTrace()
             throw IOException("Failed to save PDF: ${e.message}")

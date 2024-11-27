@@ -15,7 +15,7 @@ import java.io.IOException
 
 // Composable function to allow user to type and save a PDF
 @Composable
-actual fun savePdfDoc(): Launcher {
+actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
     val launcherCustom: Launcher?
     val context = LocalContext.current
     var  isReadExternalStoragePermissionGranted by remember { mutableStateOf(false) }
@@ -44,7 +44,10 @@ actual fun savePdfDoc(): Launcher {
             }
             try {
                 if(isReadExternalStoragePermissionGranted || isWriteExternalStoragePermissionGranted ){
-                    val pdfPath = createAndSavePdf(pdfretrived.firstname,pdfretrived.lastname, pdfretrived.email,pdfretrived.fileName)
+                    val pdfPath = createAndSavePdf(pdfretrived.firstname,pdfretrived.lastname, pdfretrived.email,pdfretrived.fileName, fileSavedStatus = {location->
+                        fileLocation(location)
+
+                    })
                     Toast.makeText(context, "PDF saved to $pdfPath", Toast.LENGTH_LONG).show()
                 }else{
                     multiplePermissionsLauncher.launch(
