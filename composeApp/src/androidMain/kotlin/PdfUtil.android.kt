@@ -12,31 +12,20 @@ actual object PdfUtil {
         lastname: String,
         email: String,
         fileName: String,
-        fileSavedStatus:(url: String)->Unit
+        fileSavedStatus: (url: String) -> Unit
     ): String {
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
         val page = pdfDocument.startPage(pageInfo)
         val canvas: Canvas = page.canvas
         val paint = Paint().apply { isAntiAlias = true }
-        // Define table dimensions
+
+        // Define text dimensions and positions
         val startX = 50f
         val startY = 50f
         val columnWidth = 150f
         val rowHeight = 50f
-        val numRows = 4
-        val numColumns = 3 // Adjusted to match First Name, Last Name, and Email
 
-        // Draw table rows
-        for (row in 0..numRows) {
-            val top = startY + row * rowHeight
-            canvas.drawLine(startX, top, startX + numColumns * columnWidth, top, paint)
-        }
-        // Draw table columns
-        for (col in 0..numColumns) {
-            val left = startX + col * columnWidth
-            canvas.drawLine(left, startY, left, startY + numRows * rowHeight, paint)
-        }
         // Add header row
         paint.textSize = 16f
         paint.textAlign = Paint.Align.CENTER
@@ -46,7 +35,6 @@ actual object PdfUtil {
             val textY = startY + rowHeight / 2 - (paint.descent() + paint.ascent()) / 2
             canvas.drawText(header, textX, textY, paint)
         }
-
         // Add user data row
         val userData = listOf(firstname, lastname, email)
         userData.forEachIndexed { index, data ->
@@ -54,6 +42,7 @@ actual object PdfUtil {
             val textY = startY + rowHeight + rowHeight / 2 - (paint.descent() + paint.ascent()) / 2
             canvas.drawText(data, textX, textY, paint)
         }
+
         pdfDocument.finishPage(page)
         // Set the directory to save the PDF file
         val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
