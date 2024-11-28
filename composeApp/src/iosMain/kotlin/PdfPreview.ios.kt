@@ -2,6 +2,8 @@ import PdfUtil.createAndSavePdf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 
+object IOSPlatformContext : PlatformContext
+
 @Composable
 actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
 
@@ -9,7 +11,7 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
     launcherCustom = remember {
         Launcher(onLaunch = {pdfretrived->
             try {
-                createAndSavePdf(pdfretrived.firstname,pdfretrived.lastname,pdfretrived.email,pdfretrived.fileName, fileSavedStatus = {location->
+                createAndSavePdf(pdfretrived.firstname,pdfretrived.lastname,pdfretrived.email,pdfretrived.fileName, context =IOSPlatformContext , fileSavedStatus = {location->
                    fileLocation(location)
                 })
 
