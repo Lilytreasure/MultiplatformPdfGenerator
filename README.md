@@ -30,6 +30,18 @@ https://github.com/ttypic/swift-klib-plugin<br>
 
 ## Screenshots
 
+### Android
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <!-- Top row of images -->
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <img src="art/android1.jpeg" width="250" />
+        <img src="art/android2.jpeg" width="250" />
+        <img src="art/android3.jpeg" width="250" />
+    </div>
+    <!-- Image below -->
+    <img src="art/android4.jpeg" width="250" />
+</div>
 
 ### iOS
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
