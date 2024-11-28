@@ -32,7 +32,7 @@ https://github.com/ttypic/swift-klib-plugin<br>
 
 ## iOS Screen Shots
 
-| ![Screenshot 1](https://github.com/Lilytreasure/MultiplatformPdfGenerator/main/assets/screenshots/ios1.png) | ![Screenshot 2](https://github.com/Lilytreasure/MultiplatformPdfGenerator/main/assets/screenshots/ios2.png) |
+| ![Screenshot 1](https://github.com/Lilytreasure/MultiplatformPdfGenerator/main/assets/screenshots/ios1.PNG) | ![Screenshot 2](https://github.com/Lilytreasure/MultiplatformPdfGenerator/main/assets/screenshots/ios2.PNG) |
 |-------------------------------------------------------------------------------------------------------------| --- | --- |
 
 
