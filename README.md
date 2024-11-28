@@ -32,8 +32,10 @@ https://github.com/ttypic/swift-klib-plugin<br>
 
 
 ### iOS
-<img src="art/ios1.PNG" width="250" style="margin-right:20px;"/> 
-<img src="art/ios2.PNG" width="250" />
+<div style="display: flex; align-items: center; gap: 20px;">
+    <img src="art/ios1.PNG" width="250" />
+    <img src="art/ios2.PNG" width="250" />
+</div>
 
 
 
