@@ -28,8 +28,11 @@ https://github.com/arkivanov/Decompose<br>
 This gradle plugin provides easy way to include your Swift source files in your Kotlin Multiplatform Mobile shared module and access them in Kotlin via cinterop for iOS targets.<br>
 https://github.com/ttypic/swift-klib-plugin<br>
 
+## Screenshots
 
 
+### iOS
+<img src="art/ios1.PNG"  width="250"/>  <img src="art/ios2.PNG"  width="250"/> 
 
 
 
