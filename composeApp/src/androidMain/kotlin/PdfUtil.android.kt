@@ -8,22 +8,16 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.content.FileProvider
 import org.example.project.R
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 
 class AndroidPlatformContext(val context: Context) : PlatformContext
@@ -69,86 +63,42 @@ actual object PdfUtil {
             canvas.drawText(data, textX, textY, paint)
         }
         pdfDocument.finishPage(page)
-        // Define the target directory
-        val directory = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-            "Pdfgen"
-        )
 
-        // Ensure the directory exists
-        if (!directory.exists()) {
-            directory.mkdirs()
-        }
+        // Saving the PDF using Scoped Storage
+        val fileUri: Uri = savePdfToMediaStore(currentActivity, pdfDocument, fileName)
 
-        val file = File(directory, "$fileName.pdf")
+        // Notify the result
+        fileSavedStatus(fileUri.toString()) // Return the URI of the saved file
 
-        try {
-            FileOutputStream(file).use { output ->
-                pdfDocument.writeTo(output)
-            }
-
-            // Save file based on Android version
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                saveFileUsingMediaStore(currentActivity, file, fileName)
-            } else {
-                saveFileUsingLegacyMethod(currentActivity, file, fileName)
-            }
-            fileSavedStatus(file.absolutePath)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw IOException("Failed to save PDF: ${e.message}")
-        } finally {
-            pdfDocument.close()
-        }
-        return file.absolutePath // Return the path of the saved PDF
+        pdfDocument.close()
+        return fileUri.toString() // Return the URI as the file path
     }
 }
 
-private fun saveFileUsingLegacyMethod(
-    activity: Activity,
-    sourceFile: File,
+private fun savePdfToMediaStore(
+    context: Context,
+    pdfDocument: PdfDocument,
     fileName: String
-) {
-    // Define the target directory
-    val directory = File(
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-        "/Pdfgen"
-    )
-    if (!directory.exists()) {
-        directory.mkdirs() // Create the directory if it doesn't exist
+): Uri {
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, "$fileName.pdf")
+        put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Pdfgen") // Scoped Storage path
     }
 
-    // Define the destination file
-    val destinationFile = File(directory, fileName)
-    try {
-        // Copy the source file to the destination file
-        sourceFile.copyTo(destinationFile, overwrite = true)
+    // Insert into MediaStore
+    val uri = context.contentResolver.insert(
+        MediaStore.Files.getContentUri("external"),
+        contentValues
+    ) ?: throw IOException("Failed to create file in MediaStore")
 
-        // Notify media scanner (for Android 10 and below)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            MediaScannerConnection.scanFile(
-                activity,
-                arrayOf(destinationFile.absolutePath),
-                arrayOf("application/pdf"),
-                null
-            )
-        }
-        // Get URI using FileProvider
-        val uri = FileProvider.getUriForFile(
-            activity,
-            "${activity.packageName}.fileprovider",
-            destinationFile
-        )
-        showPdfSaveCompleteNotification(activity, fileName, uri)
+    // Open the output stream to the URI
+    context.contentResolver.openOutputStream(uri)?.use { outputStream ->
+        pdfDocument.writeTo(outputStream) // Write the PDF content to the URI
+    } ?: throw IOException("Failed to open output stream for saving PDF")
+    showPdfSaveCompleteNotification(context, fileName, uri)
 
-    } catch (e: IOException) {
-        Log.e("SaveFile", "Error saving file: ${e.message}")
-        // Show error message on the main thread
-        Handler(Looper.getMainLooper()).post {
-            Toast.makeText(activity, "Error saving file: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
-
+    return uri
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
