@@ -11,7 +11,7 @@ import platform.Foundation.lastPathComponent
 
 
 @OptIn(ExperimentalForeignApi::class)
-actual fun getAllFilesInDirectory(): List<String> {
+actual fun getAllFilesInDirectory(context: PlatformContext): List<String> {
     val fileManager = NSFileManager.defaultManager
     val documentsPath = NSSearchPathForDirectoriesInDomains(
         NSDocumentDirectory,
@@ -39,7 +39,7 @@ actual fun openPdfDoc(context: PlatformContext): Launcher {
 
     launcherCustom = remember {
         Launcher(onLaunch = { _, filename ->
-
+            //Open clicked docs logic on ios
 
         })
     }

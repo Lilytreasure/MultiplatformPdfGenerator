@@ -1,13 +1,54 @@
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.core.content.FileProvider
 import java.io.File
 
-actual fun getAllFilesInDirectory(): List<String> {
+actual fun getAllFilesInDirectory(context: PlatformContext): List<String> {
+    val androidContext = (context as AndroidPlatformContext).context
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        getFilesFromMediaStore(androidContext)
+    } else {
+        getFilesFromLegacyStorage()
+    }
+}
+
+//Read files from Android 10 and above
+private fun getFilesFromMediaStore(context: Context): List<String> {
+    val files = mutableListOf<String>()
+    val contentResolver: ContentResolver = context.contentResolver
+    val uri: Uri = MediaStore.Files.getContentUri("external")
+    val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
+
+    val cursor: Cursor? = contentResolver.query(
+        uri,
+        projection,
+        "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?",
+        arrayOf("%Pdfgen%"),
+        null
+    )
+
+    cursor?.use {
+        val displayNameColumn = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+        while (it.moveToNext()) {
+            val fileName = it.getString(displayNameColumn)
+            files.add(fileName)
+        }
+    }
+
+    return files
+}
+//Read files below Android 10
+private fun getFilesFromLegacyStorage(): List<String> {
     val directory = File(
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
         "Pdfgen"
@@ -18,6 +59,7 @@ actual fun getAllFilesInDirectory(): List<String> {
         emptyList()
     }
 }
+
 @Composable
 actual fun openPdfDoc(context: PlatformContext) : Launcher {
     val launcherCustom: Launcher?

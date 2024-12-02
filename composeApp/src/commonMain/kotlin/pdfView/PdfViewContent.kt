@@ -33,7 +33,7 @@ import utils.CustomSnackBar
 @Composable
 fun PdfViewContent(component: PdfViewComponent, modifier: Modifier = Modifier) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val files: List<String> = getAllFilesInDirectory()
+    val files: List<String> = getAllFilesInDirectory(getPlatformContext())
     val openDocs = openPdfDoc(getPlatformContext())
     Scaffold(
         modifier = Modifier
