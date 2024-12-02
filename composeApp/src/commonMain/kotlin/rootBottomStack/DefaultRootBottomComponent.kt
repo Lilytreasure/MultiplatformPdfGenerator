@@ -12,6 +12,8 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import kotlinx.serialization.Serializable
+import pdfView.DefaultPdfViewComponent
+import pdfView.PdfViewComponent
 import receipt.DefaultReceiptComponent
 import receipt.ReceiptComponent
 
@@ -49,6 +51,9 @@ class DefaultRootBottomComponent(
             is ConfigBottom.Notification -> RootBottomComponent.ChildBottom.NotificationsChild(
                 notificationComponent(componentContext)
             )
+            is ConfigBottom.PdfView -> RootBottomComponent.ChildBottom.PdfViewChild(
+             pdfViewComponent(componentContext)
+            )
         }
 
     private fun feedsComponent(componentContext: ComponentContext): HomeComponent =
@@ -69,6 +74,14 @@ class DefaultRootBottomComponent(
 
         )
 
+    private fun pdfViewComponent(componentContext: ComponentContext): PdfViewComponent =
+        DefaultPdfViewComponent(
+            componentContext = componentContext,
+            onShowWelcome = {
+
+            }
+
+        )
 
     override fun openFeeds() {
         navigationBottomStackNavigation.bringToFront(ConfigBottom.Feeds)
@@ -76,6 +89,10 @@ class DefaultRootBottomComponent(
 
     override fun openNotifications() {
         navigationBottomStackNavigation.bringToFront(ConfigBottom.Notification)
+    }
+
+    override fun openPdfView() {
+        navigationBottomStackNavigation.bringToFront(ConfigBottom.PdfView)
     }
 
     @Serializable
@@ -86,6 +103,9 @@ class DefaultRootBottomComponent(
 
         @Serializable
         data object Notification : ConfigBottom()
+
+        @Serializable
+        data object PdfView : ConfigBottom()
 
     }
 

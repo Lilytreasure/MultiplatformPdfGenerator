@@ -32,7 +32,7 @@ actual object PdfUtil {
             return "Error: Failed to generate PDF."
         }
 
-
+     //Sample to show  different ways to handle cinterop in Local directory
 //        val pdfHelper = PdfController() // Ensure PdfController is correctly implemented and accessible
 //        // Create a list of people
 //        val people = listOf(
