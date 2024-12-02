@@ -32,8 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import composables.EntriesText
+import composables.SignatureContainer
 import kotlinx.coroutines.launch
 import savePdfDoc
 import utils.CustomSnackBar
@@ -142,7 +142,9 @@ fun NotificationContent(component: ReceiptComponent, modifier: Modifier = Modifi
                             },
                             resetSignal = email.isBlank()
                         )
-
+                       //Add signature
+                       SignatureContainer()
+                        
                         EntriesText(
                             loadedEntry = "",
                             focusRequester = focusname,
@@ -155,6 +157,8 @@ fun NotificationContent(component: ReceiptComponent, modifier: Modifier = Modifi
                             },
                             resetSignal = fileName.isBlank()
                         )
+
+
 
                     }
                     item {
