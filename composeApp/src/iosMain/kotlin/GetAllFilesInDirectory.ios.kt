@@ -1,3 +1,5 @@
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDirectoryEnumerationIncludesDirectoriesPostOrder
 import platform.Foundation.NSDocumentDirectory
@@ -28,4 +30,19 @@ actual fun getAllFilesInDirectory(): List<String> {
     )?.filterIsInstance<NSURL>()
 
     return contents?.map { it.lastPathComponent ?: "" } ?: emptyList()
+}
+
+//Todo--Open the clicked  docs
+@Composable
+actual fun openPdfDoc(context: PlatformContext): Launcher {
+    val launcherCustom: Launcher?
+
+    launcherCustom = remember {
+        Launcher(onLaunch = { _, filename ->
+
+
+        })
+    }
+
+    return launcherCustom
 }

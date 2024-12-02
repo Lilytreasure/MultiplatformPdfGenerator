@@ -54,9 +54,9 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
 
     }
     launcherCustom = remember {
-        Launcher(onLaunch = { pdfretrived ->
-            println("loaded:::;; file " + pdfretrived.firstname)
-            if (pdfretrived.fileName.isBlank()) {
+        Launcher(onLaunch = { pdfretrived,_ ->
+            println("loaded:::;; file " + pdfretrived?.firstname)
+            if (pdfretrived?.fileName?.isBlank() == true) {
                 Toast.makeText(context, "Please enter a valid file name.", Toast.LENGTH_SHORT)
                     .show()
                 return@Launcher
@@ -64,10 +64,10 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
             try {
                 if (isReadExternalStoragePermissionGranted || isWriteExternalStoragePermissionGranted) {
                     val pdfPath = createAndSavePdf(
-                        pdfretrived.firstname,
-                        pdfretrived.lastname,
-                        pdfretrived.email,
-                        pdfretrived.fileName,
+                        pdfretrived?.firstname ?: "",
+                        pdfretrived?.lastname?: "",
+                        pdfretrived?.email?: "",
+                        pdfretrived?.fileName?: "",
                         context = AndroidPlatformContext(context),
                         fileSavedStatus = { location ->
                             fileLocation(location)
@@ -86,10 +86,10 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && isReadMediaGranted) {
                     val pdfPath = createAndSavePdf(
-                        pdfretrived.firstname,
-                        pdfretrived.lastname,
-                        pdfretrived.email,
-                        pdfretrived.fileName,
+                        pdfretrived?.firstname ?: "",
+                        pdfretrived?.lastname?: "",
+                        pdfretrived?.email?: "",
+                        pdfretrived?.fileName?: "",
                         context = AndroidPlatformContext(context),
                         fileSavedStatus = { location ->
                             fileLocation(location)

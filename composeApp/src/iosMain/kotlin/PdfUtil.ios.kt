@@ -1,3 +1,4 @@
+import androidx.compose.runtime.Composable
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.example.project.Decompose.PDFHelper
 
@@ -53,3 +54,6 @@ actual object PdfUtil {
 }
 
 
+
+@Composable
+actual fun getPlatformContext(): PlatformContext = IOSPlatformContext

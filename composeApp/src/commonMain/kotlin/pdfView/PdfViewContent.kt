@@ -1,6 +1,7 @@
 package pdfView
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,18 +22,19 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import getAllFilesInDirectory
+import getPlatformContext
+import openPdfDoc
 import utils.CustomSnackBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PdfViewContent(component: PdfViewComponent, modifier: Modifier = Modifier) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val files: List<String> = getAllFilesInDirectory()
+    val openDocs = openPdfDoc(getPlatformContext())
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -87,7 +89,15 @@ fun PdfViewContent(component: PdfViewComponent, modifier: Modifier = Modifier) {
                     items(files) { fileName ->  // items expects a List
                         Text(
                             text = fileName,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    try {
+                                        openDocs.launch(filename = fileName)
+                                    } catch (e: Exception) {
+                                        println("Eror opening pdf" + e)
+                                    }
+                                }
                         )
                     }
                     item {
