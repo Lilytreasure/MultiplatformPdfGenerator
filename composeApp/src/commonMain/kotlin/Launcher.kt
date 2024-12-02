@@ -1,5 +1,5 @@
 expect class Launcher(
-    onLaunch: (pdfDocData: PdfDocData) -> Unit,
+    onLaunch: (pdfDocData: PdfDocData?,filename: String?) -> Unit,
 ) {
-    fun launch(pdfDocData: PdfDocData)
+    fun launch(pdfDocData: PdfDocData?=null,filename: String?=null)
 }

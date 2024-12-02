@@ -1,3 +1,4 @@
+import androidx.compose.runtime.Composable
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.example.project.Decompose.PDFHelper
 
@@ -32,7 +33,7 @@ actual object PdfUtil {
             return "Error: Failed to generate PDF."
         }
 
-
+     //Sample to show  different ways to handle cinterop in Local directory
 //        val pdfHelper = PdfController() // Ensure PdfController is correctly implemented and accessible
 //        // Create a list of people
 //        val people = listOf(
@@ -53,3 +54,6 @@ actual object PdfUtil {
 }
 
 
+
+@Composable
+actual fun getPlatformContext(): PlatformContext = IOSPlatformContext

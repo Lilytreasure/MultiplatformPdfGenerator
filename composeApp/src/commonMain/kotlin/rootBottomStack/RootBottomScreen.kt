@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.PictureAsPdf
 import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.BottomAppBar
@@ -27,6 +28,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import pdfView.PdfViewContent
 import receipt.NotificationContent
 
 data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
@@ -38,7 +40,8 @@ fun RootBottomScreen(component: RootBottomComponent, modifier: Modifier = Modifi
         mutableStateOf(
             listOf(
                 ScreensBottom("Home", component::openFeeds, false),
-                ScreensBottom("Receipt", component::openNotifications, false)
+                ScreensBottom("Receipt", component::openNotifications, false),
+                ScreensBottom("Documents", component::openPdfView, false)
             )
         )
     }
@@ -55,8 +58,14 @@ fun RootBottomScreen(component: RootBottomComponent, modifier: Modifier = Modifi
                                         Icons.Outlined.PictureAsPdf,
                                         contentDescription = null
                                     )
+
                                     "Receipt" -> Icon(
                                         Icons.Outlined.ReceiptLong,
+                                        contentDescription = null
+                                    )
+
+                                    "Documents" -> Icon(
+                                        Icons.Outlined.Folder,
                                         contentDescription = null
                                     )
                                 }
@@ -90,6 +99,10 @@ fun RootBottomScreen(component: RootBottomComponent, modifier: Modifier = Modifi
                     when (val child = it.instance) {
                         is RootBottomComponent.ChildBottom.FeedsChild -> HomeContent(component = child.component)
                         is RootBottomComponent.ChildBottom.NotificationsChild -> NotificationContent(
+                            component = child.component
+                        )
+
+                        is RootBottomComponent.ChildBottom.PdfViewChild -> PdfViewContent(
                             component = child.component
                         )
                     }

@@ -13,6 +13,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import org.example.project.R
 import java.io.File
@@ -181,3 +183,8 @@ private fun showPdfSaveCompleteNotification(context: Context, fileName: String, 
     notificationManager.notify(0, notificationBuilder.build())
 }
 
+@Composable
+actual fun getPlatformContext(): PlatformContext {
+    val context = LocalContext.current
+    return AndroidPlatformContext(context)
+}
