@@ -9,31 +9,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.preat.peekaboo.image.picker.toImageBitmap
+import utils.SignatureLine
+import utils.SignatureState
+import utils.toImageBitmap
 
 @Composable
 fun SignatureContainer() {
     val state = rememberSignatureState()
-    val signatureByteArray by rememberSaveable { mutableStateOf<ByteArray?>(null) }
-    Column(){
+    Column() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -55,6 +49,18 @@ fun SignatureContainer() {
                         state.addSignatureLine(signatureLine)
                     }
                 }
+                .drawWithContent {
+                    drawContent()
+                    state.updateSignature(
+                        toImageBitmap(
+                            width = size.width.toInt(),
+                            height = size.height.toInt(),
+                            signatureColor = Color.Black,
+                            signatureSize = 5.dp,
+                            signatureSignatureLines = state.signatureLines,
+                        ),
+                    )
+                }
         ) {
             androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) { // Draw all the signature lines in real time
                 state.signatureLines.forEach { line ->
@@ -68,58 +74,21 @@ fun SignatureContainer() {
                 }
             }
         }
-        //image preview
-        signatureByteArray?.let { byteArray ->
-            val bitmap = byteArray.toImageBitmap()
-            Image(
-                bitmap = bitmap,
-                contentDescription = "Signature Preview",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-            )
+
+        state.signature.let {
+            if (it != null) {
+               // it.toByteArray(ImageFormat.PNG)  convert for storage
+                Image(
+                    bitmap = it,
+                    contentDescription = "Signature",
+                    modifier = Modifier
+                        .size(400.dp, 200.dp)
+                )
+            }
         }
     }
 }
 
-@Stable
-class SignatureState {
-    private val _signatureLines = mutableStateListOf<SignatureLine>()
-    val signatureLines: List<SignatureLine> get() = _signatureLines.toList()
-
-    private val _signature = mutableStateOf<ImageBitmap?>(null)
-    val signature: ImageBitmap? get() = _signature.value
-
-    fun addSignatureLine(signatureLine: SignatureLine) {
-        _signatureLines.add(signatureLine)
-    }
-
-    fun clearSignatureLines() {
-        _signatureLines.clear()
-    }
-
-    fun updateSignature(bitmap: ImageBitmap) {
-        _signature.value = bitmap
-    }
-
-    companion object {
-        val Saver: Saver<SignatureState, *> = Saver(
-            save = {
-                it.signatureLines to it.signature
-            },
-            restore = {
-                SignatureState().apply {
-                    _signatureLines.addAll(it.first)
-                    _signature.value = it.second
-                }
-            },
-        )
-    }
-}
 
 @Composable
 fun rememberSignatureState(): SignatureState {
@@ -128,10 +97,10 @@ fun rememberSignatureState(): SignatureState {
     }
 }
 
-@Immutable
-data class SignatureLine(
-    val start: Offset,
-    val end: Offset,
-)
+
+
+
+
+
 
 
