@@ -16,6 +16,7 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
                     pdfretrived?.lastname?: "",
                     pdfretrived?.email?: "",
                     pdfretrived?.fileName?: "",
+                    signature = pdfretrived?.signature,
                     context = IOSPlatformContext,
                     fileSavedStatus = { location ->
                         fileLocation(location)
