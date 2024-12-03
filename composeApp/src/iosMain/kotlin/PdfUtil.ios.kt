@@ -15,13 +15,16 @@ actual object PdfUtil {
         signature: ByteArray?,
         fileSavedStatus: (url: String) -> Unit
     ): String {
-
         val pdf2 = PDFHelper()
         val people = listOf(
             mapOf("firstname" to firstname, "lastname" to lastname, "email" to email)
         )
+        val uiImageData = pdf2.byteArrayToUIImageWithSignature(signature?.map { it.toUByte() })
         val pdfData =
-            pdf2.generatePDFFrom(people) // Ensure this matches the function in your Swift code
+            pdf2.generatePDFFrom(
+                people,
+                uiImageData
+            ) // Ensure this matches the function in your Swift code
         if (pdfData != null) {
             // Save the PDF
             val savedURL =
@@ -34,7 +37,7 @@ actual object PdfUtil {
             return "Error: Failed to generate PDF."
         }
 
-     //Sample to show  different ways to handle cinterop in Local directory
+        //Sample to show  different ways to handle cinterop in Local directory
 //        val pdfHelper = PdfController() // Ensure PdfController is correctly implemented and accessible
 //        // Create a list of people
 //        val people = listOf(
@@ -53,7 +56,6 @@ actual object PdfUtil {
 //        }
     }
 }
-
 
 
 @Composable
