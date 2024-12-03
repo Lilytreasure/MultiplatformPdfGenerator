@@ -1,7 +1,6 @@
 package composables
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
@@ -25,7 +24,9 @@ import utils.SignatureState
 import utils.toImageBitmap
 
 @Composable
-fun SignatureContainer() {
+fun SignatureContainer(
+    onSignatureCaptured: (ImageBitmap) -> Unit // Callback to pass the result
+) {
     val state = rememberSignatureState()
     Column() {
         Box(
@@ -74,16 +75,10 @@ fun SignatureContainer() {
                 }
             }
         }
-
         state.signature.let {
             if (it != null) {
                // it.toByteArray(ImageFormat.PNG)  convert for storage
-                Image(
-                    bitmap = it,
-                    contentDescription = "Signature",
-                    modifier = Modifier
-                        .size(400.dp, 200.dp)
-                )
+                onSignatureCaptured(it)
             }
         }
     }
