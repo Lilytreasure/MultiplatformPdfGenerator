@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import composables.PdfViewCard
 import getAllFilesInDirectory
 import getPlatformContext
 import openPdfDoc
@@ -85,20 +86,16 @@ fun PdfViewContent(component: PdfViewComponent, modifier: Modifier = Modifier) {
                     .padding(padding)
             ) {
                 LazyColumn(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-
                     items(files) { fileName ->  // items expects a List
-                        Text(
-                            text = fileName,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable {
-                                    try {
-                                        openDocs.launch(filename = fileName)
-                                    } catch (e: Exception) {
-                                        println("Eror opening pdf" + e)
-                                    }
+                        PdfViewCard(label = fileName,
+                            description = "12/2/22",
+                            onClickContainer = {
+                                try {
+                                    openDocs.launch(filename = fileName)
+                                } catch (e: Exception) {
+                                    println("Eror opening pdf" + e)
                                 }
-                        )
+                            })
                     }
                     item {
                         Spacer(modifier = Modifier.padding(bottom = 200.dp))
