@@ -167,7 +167,8 @@ fun HomeContent(
                                         firstname = firstName,
                                         lastname = lastName,
                                         email,
-                                        fileName
+                                        fileName,
+                                        signature = null
                                     )
                                 )
                                 if (loc.isNotBlank()){

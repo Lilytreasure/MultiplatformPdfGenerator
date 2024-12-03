@@ -68,6 +68,7 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
                         pdfretrived?.lastname?: "",
                         pdfretrived?.email?: "",
                         pdfretrived?.fileName?: "",
+                        signature = pdfretrived?.signature,
                         context = AndroidPlatformContext(context),
                         fileSavedStatus = { location ->
                             fileLocation(location)
@@ -90,6 +91,7 @@ actual fun savePdfDoc(fileLocation: (url: String) -> Unit): Launcher {
                         pdfretrived?.lastname?: "",
                         pdfretrived?.email?: "",
                         pdfretrived?.fileName?: "",
+                        signature = pdfretrived?.signature,
                         context = AndroidPlatformContext(context),
                         fileSavedStatus = { location ->
                             fileLocation(location)

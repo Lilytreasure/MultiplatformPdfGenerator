@@ -12,6 +12,7 @@ actual object PdfUtil {
         email: String,
         fileName: String,
         context: PlatformContext,
+        signature: ByteArray?,
         fileSavedStatus: (url: String) -> Unit
     ): String {
 

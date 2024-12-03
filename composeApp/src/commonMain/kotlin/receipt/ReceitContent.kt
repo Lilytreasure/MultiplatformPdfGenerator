@@ -52,6 +52,7 @@ import composables.EntriesText
 import composables.SignAction
 import kotlinx.coroutines.launch
 import savePdfDoc
+import toByteArray
 import utils.CustomSnackBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -239,7 +240,8 @@ fun NotificationContent(component: ReceiptComponent, modifier: Modifier = Modifi
                                         firstname = firstName,
                                         lastname = lastName,
                                         email,
-                                        fileName
+                                        fileName,
+                                        signature = signature?.toByteArray(ImageFormat.PNG)
                                     )
                                 )
                                 if (loc.isNotBlank()) {
