@@ -2,7 +2,7 @@
 
 
 This is a Kotlin Multiplatform project targeting Android, iOS with illustrations on how to create a pdf on Android/iOS.<br>
- Fo those will Xcode versions older  than 15 clone from  the mainCopy Branch
+ For those with Xcode versions older  than 15 clone from  the mainCopy Branch.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
