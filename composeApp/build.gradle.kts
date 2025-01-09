@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.swiftKlib)
-    id("com.arkivanov.parcelize.darwin") version "0.2.3"
     id("kotlin-parcelize")
     id("app.cash.sqldelight") version "2.0.0"
-    kotlin("plugin.serialization") version "1.9.21"
+    kotlin("plugin.serialization") version "2.0.20"
+    alias(libs.plugins.compose.compiler)
 }
 
 swiftklib {
@@ -47,11 +47,6 @@ kotlin {
             // Optional, only if you need state preservation on Darwin (Apple) targets
             export(libs.essenty.stateKeeper)
 
-            export(libs.parcelizeDarwin.runtime)
-
-
-            //coil
-            //export("io.coil-kt.coil3:coil:3.0.0-alpha01")
         }
 
         iosTarget.compilations {
@@ -124,7 +119,7 @@ kotlin {
             implementation(libs.decompose)
 
             //modified
-            implementation("com.arkivanov.decompose:extensions-compose:3.0.0")
+            implementation("com.arkivanov.decompose:extensions-compose:3.2.2")
             api(libs.essenty.lifecycle)
             api(libs.essenty.stateKeeper)
 
@@ -171,26 +166,17 @@ kotlin {
             implementation(libs.peekaboo.image.picker)
             //modified
             implementation("co.touchlab:stately-common:2.0.5")
-
-
         }
 
         iosMain.dependencies {
-            //ios dependencies
             // Ktor
             implementation(libs.ktor.clientDarwin)
-
             // SqlDelight
             implementation(libs.sqlDelight.nativeDriver)
 
             api(libs.decompose)
 
             api(libs.essenty.lifecycle)
-
-            //Modified
-            api(libs.parcelizeDarwin.runtime)
-
-
         }
     }
 

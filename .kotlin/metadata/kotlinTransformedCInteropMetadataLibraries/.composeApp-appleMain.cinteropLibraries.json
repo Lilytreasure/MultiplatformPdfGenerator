@@ -1,0 +1,22 @@
+[
+  {
+    "moduleId": "com.moriatsushi.insetsx:insetsx:0.1.0-alpha10",
+    "file": "/Users/mac/AndroidStudioProjects/MultiplatformPdfGenerator/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/com.moriatsushi.insetsx-insetsx-0.1.0-alpha10-uikitMain-cinterop/insetsx_insetsx-cinterop-uikit-zYqGSw.klib",
+    "sourceSetName": "uikitMain"
+  },
+  {
+    "moduleId": "org.jetbrains.kotlinx:atomicfu:0.23.2",
+    "file": "/Users/mac/AndroidStudioProjects/MultiplatformPdfGenerator/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.kotlinx-atomicfu-0.23.2-nativeMain-cinterop/org.jetbrains.kotlinx_atomicfu-cinterop-interop-yBS35w.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": "org.jetbrains.compose.ui:ui-uikit:1.7.0",
+    "file": "/Users/mac/AndroidStudioProjects/MultiplatformPdfGenerator/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.compose.ui-ui-uikit-1.7.0-uikitMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-aNVDjg.klib",
+    "sourceSetName": "uikitMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-utils:2.3.11",
+    "file": "/Users/mac/AndroidStudioProjects/MultiplatformPdfGenerator/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-2.3.11-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-TE4abA.klib",
+    "sourceSetName": "iosMain"
+  }
+]
