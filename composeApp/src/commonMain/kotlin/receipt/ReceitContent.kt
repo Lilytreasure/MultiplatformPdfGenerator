@@ -1,5 +1,6 @@
 package receipt
 
+import ImageFormat
 import PdfDocData
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -93,7 +94,7 @@ fun NotificationContent(component: ReceiptComponent, modifier: Modifier = Modifi
                 title = {
                     Text(
                         "Receipt Preview",
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
                     )
                 })
         },
